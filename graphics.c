@@ -8,8 +8,21 @@ void draw_frame(void){
     char screen[SCREEN_HEIGHT][SCREEN_WIDTH]; // Initialices the matrix size
     memset(screen, '.', sizeof(screen)); // Sets the matrix to '.' 
     
+    // Draw border
+    for(int x = 0; x < SCREEN_WIDTH; x++) {
+        screen[0][x] = '-';
+        screen[SCREEN_HEIGHT-1][x] = '-';
+    }
+    for(int y = 0; y < SCREEN_HEIGHT; y++) {
+        screen[y][0] = '|';
+        screen[y][SCREEN_WIDTH-1] = '|';
+    }
+
     // Draw player
-    screen[player.y][player.x] = 'W';
+    if(player.x >= 0 && player.x < SCREEN_WIDTH &&
+       player.y >= 0 && player.y < SCREEN_HEIGHT) {
+        screen[player.y][player.x] = 'W';
+    }
 
     // Draw bullets    
     for(int i = 0; i < NUM_BULLETS; i++) {
@@ -37,4 +50,7 @@ void draw_frame(void){
         putchar('\n');
     }
 
+    // Draw HUD below the game area
+    printf("\n");
+    printf("  SCORE: %d.    LIVES %d.    [Controls: A=Left, D=Right, M=Shoot]", player.score, player.lives);
 }
