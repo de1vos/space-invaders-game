@@ -8,6 +8,8 @@ int main(void) {
    // init_system();     // initialize VGA, inputs, etc.
     init_game();       // load sprites, set score=0, etc.
     draw_frame();
+
+    draw_frame();
     while (1) {
         handle_input();    // step 1: check buttons or keyboard
         update_game();     // step 2: move player, aliens, bullets
