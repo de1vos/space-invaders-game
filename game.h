@@ -7,6 +7,7 @@
 #define PLAYER_LIVES 3
 #define SCREEN_WIDTH 80
 #define SCREEN_HEIGHT 25
+#define POINTS_PER_ALIEN 10
 
 typedef struct {
     int x, y;
@@ -21,6 +22,7 @@ typedef struct {
 typedef struct {
     int x, y;
     int lives;
+    int score;
 } Player;
 
 //initializes structures as extern so we can call them from our other functions/files

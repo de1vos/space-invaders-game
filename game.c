@@ -16,6 +16,7 @@ void init_game(void) {
     player.x = SCREEN_WIDTH / 2; // Player position initialisation
     player.y = SCREEN_HEIGHT - 2; // Player position initialisation
     player.lives = PLAYER_LIVES;
+    player.score = 0;
 
     for (int i = 0; i < NUM_ALIENS; i++) { // Sets rows of 5 of aliens
         aliens[i].x = (i % 5) * 12 + 10; // Intra-row position
@@ -81,6 +82,7 @@ void update_game(void) {
                    bullets[i].y == aliens[j].y) {
                     aliens[j].alive = 0;   // kill alien
                     bullets[i].active = 0; // remove bullet
+                    player.score += POINTS_PER_ALIEN;
                 }
             }
         }
