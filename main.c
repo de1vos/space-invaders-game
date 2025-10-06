@@ -7,6 +7,7 @@
 int main(void) {
    // init_system();     // initialize VGA, inputs, etc.
     init_game();       // load sprites, set score=0, etc.
+    draw_game();
 
     while (1) {
         handle_input();    // step 1: check buttons or keyboard
