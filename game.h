@@ -5,8 +5,8 @@
 #define NUM_ALIENS 10
 #define NUM_BULLETS 100
 #define PLAYER_LIVES 3
-#define SCREEN_WIDTH 320
-#define SCREEN_HEIGHT 200
+#define SCREEN_WIDTH 80
+#define SCREEN_HEIGHT 25
 
 typedef struct {
     int x, y;

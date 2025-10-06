@@ -10,12 +10,12 @@ Bullet bullets[NUM_BULLETS];
 
 void init_game(void) {
     player.x = SCREEN_WIDTH / 2;
-    player.y = SCREEN_HEIGHT - 20;
+    player.y = SCREEN_HEIGHT - 2;
     player.lives = PLAYER_LIVES;
 
     for (int i = 0; i < NUM_ALIENS; i++) {
-        aliens[i].x = (i % 5) * 40 + 20;
-        aliens[i].y = (i / 5) * 30 + 20;
+        aliens[i].x = (i % 5) * 12 + 10;
+        aliens[i].y = (i / 5) * 4 + 2;
         aliens[i].alive = 1;
     }
 
