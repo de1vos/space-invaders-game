@@ -56,3 +56,29 @@ void shoot_bullet(void) {
         }
     }
 }
+
+// Move bullets and check for off-screen
+void update_game(void) {
+    for(int i = 0; i < NUM_BULLETS; i++) {
+        if(bullets[i].active) {
+            bullets[i].y -= 1;  // move bullet up
+
+            // If bullet goes off-screen, deactivate it
+            if(bullets[i].y < 0) {
+                bullets[i].active = 0;
+            }
+
+            // Check collision with aliens
+            for(int j = 0; j < NUM_ALIENS; j++) {
+                if(aliens[j].alive &&
+                   bullets[i].x == aliens[j].x &&
+                   bullets[i].y == aliens[j].y) {
+                    aliens[j].alive = 0;   // kill alien
+                    bullets[i].active = 0; // remove bullet
+                }
+            }
+        }
+    }
+
+    // TODO: later move aliens here
+}

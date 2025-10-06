@@ -10,7 +10,7 @@ int main(void) {
 
     while (1) {
         handle_input();    // step 1: check buttons or keyboard
-     //   update_game();     // step 2: move player, aliens, bullets
+        update_game();     // step 2: move player, aliens, bullets
         draw_frame();      // step 3: render to VGA memory
       //  wait_vsync();      // (optional) sync with VGA refresh
     }
