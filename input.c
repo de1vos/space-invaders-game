@@ -1,7 +1,7 @@
 #include "input.h"
 #include <stdio.h>
 
-Action get_action() {
+Action get_action() { // Defines get_action = our input function
     char c = getchar(); // read one character from terminal
     switch(c) {
         case 'a': return ACTION_LEFT;

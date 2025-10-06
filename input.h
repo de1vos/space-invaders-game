@@ -3,11 +3,11 @@
 #include <stdio.h>
 
 typedef enum {
-    ACTION_NONE,
-    ACTION_LEFT,
-    ACTION_RIGHT,
-    ACTION_SHOOT,
-    ACTION_QUIT
+    ACTION_NONE,     // = 0
+    ACTION_LEFT,     // = 1
+    ACTION_RIGHT,    // = 2
+    ACTION_SHOOT,    // = 3
+    ACTION_QUIT      // = 4
 } Action;
 
 Action get_action();

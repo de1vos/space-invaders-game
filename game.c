@@ -8,14 +8,18 @@ Player player;
 Alien aliens[NUM_ALIENS];
 Bullet bullets[NUM_BULLETS];
 
+static int alien_direction = 1;      // 1 = right, -1 = left
+static int alien_move_counter = 0;
+static int alien_speed = 10;         // Lower = faster
+
 void init_game(void) {
-    player.x = SCREEN_WIDTH / 2;
-    player.y = SCREEN_HEIGHT - 2;
+    player.x = SCREEN_WIDTH / 2; // Player position initialisation
+    player.y = SCREEN_HEIGHT - 2; // Player position initialisation
     player.lives = PLAYER_LIVES;
 
-    for (int i = 0; i < NUM_ALIENS; i++) {
-        aliens[i].x = (i % 5) * 12 + 10;
-        aliens[i].y = (i / 5) * 4 + 2;
+    for (int i = 0; i < NUM_ALIENS; i++) { // Sets rows of 5 of aliens
+        aliens[i].x = (i % 5) * 12 + 10; // Intra-row position
+        aliens[i].y = (i / 5) * 4 + 2; // Inter-row position
         aliens[i].alive = 1;
     }
 
@@ -28,18 +32,18 @@ void handle_input(void) {
     Action a = get_action();
 
     if(a == ACTION_LEFT) {
-        if(player.x <= 5) {
+        if(player.x == 0) {
             player.x = 0;
         } else {
-            player.x -= 5;
+            player.x -= 1;
         }
     }
 
     if(a == ACTION_RIGHT) {
-        if(player.x >= SCREEN_WIDTH - 6) {
+        if(player.x == SCREEN_WIDTH - 1) {
             player.x = SCREEN_WIDTH -1;
         } else {
-            player.x += 5;
+            player.x += 1;
         }
     }
 
@@ -81,6 +85,39 @@ void update_game(void) {
             }
         }
     }
+    // Alien movement
+    alien_move_counter++; // Why is this variable necessary?
+    if (alien_move_counter >= alien_speed){ 
+        alien_move_counter = 0;
 
-    // TODO: later move aliens here
+        //Check if any alive alien hit edge
+        int hit_edge = 0;
+        for (int i = 0; i < NUM_ALIENS; i++){
+            if (aliens[i].alive){
+                if ((alien_direction == 1 && aliens[i].x >= SCREEN_WIDTH - 2) || 
+                   (alien_direction == -1 && aliens[i].x <= 1)) {
+                    hit_edge = 1;
+                    break;
+                }
+            }
+        }
+        if (hit_edge) {
+            // Change direction and move down
+            alien_direction *= -1;
+            for (int i = 0; i < NUM_ALIENS; i++){
+                aliens[i].y += 1;
+
+                // Check if alien reached player
+                if (aliens[i].y >= player.y){
+                    player.lives = 0;
+                }
+            }
+        }
+        else {
+            // Move horizontally
+            for (int i = 0; i < NUM_ALIENS; i++) {
+                aliens[i].x += alien_direction;
+            }
+        }
+    }
 }

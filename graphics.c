@@ -5,8 +5,8 @@
 
 void draw_frame(void){
     // Use a simple 2D char array for terminal testing
-    char screen[SCREEN_HEIGHT][SCREEN_WIDTH];
-    memset(screen, '.', sizeof(screen));
+    char screen[SCREEN_HEIGHT][SCREEN_WIDTH]; // Initialices the matrix size
+    memset(screen, '.', sizeof(screen)); // Sets the matrix to '.' 
     
     // Draw player
     screen[player.y][player.x] = 'W';
