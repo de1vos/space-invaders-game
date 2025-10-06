@@ -51,4 +51,10 @@ int all_aliens_dead(void);
 // Display the game over screen
 void show_game_over_screen(void);
 
+// Check if game is over (no lives or aliens reached player)
+int is_game_over(void);
+
+// Check if player won (all aliens dead)
+int player_won(void);
+
 #endif 

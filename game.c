@@ -123,3 +123,49 @@ void update_game(void) {
         }
     }
 }
+
+int all_aliens_dead(void){
+    for (int i = 0; i < NUM_ALIENS; i++){
+        if (aliens[i].alive) {
+            return 0;
+        }
+    }
+    return 1;
+}
+
+int is_game_over(void){
+    if (player.lives <= 0) {
+        return 1;
+    }
+    for (int i = 0; i < NUM_ALIENS; i++) {
+        if (aliens[i].alive && aliens[i].y >= player.y){
+            return 1;
+        }
+    }
+    return 0;
+}
+
+int player_won(void){
+    return all_aliens_dead();
+}
+
+void show_game_over_screen(void){
+    printf("\033[2J\033[H"); // Clear screen
+    printf("\n\n\n");
+    printf("  ================================\n");
+
+    if (player_won()){
+        printf("        YOU WIN!");
+    }
+    else {
+        printf("           YOU LOSE!");
+    }
+
+    printf("  =====================================\n");
+    printf("\n");
+    printf("       Final Score: %d\n", player.score);
+    printf("       Lives Left: %d\n", player.lives);
+    printf("\n");
+    printf("  =====================================\n");
+    printf("\n");
+}
