@@ -1,5 +1,6 @@
 #ifndef GAME_H
 #define GAME_H
+#include <stdio.h>
 
 #define NUM_ALIENS 10
 #define NUM_BULLETS 100

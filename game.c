@@ -1,6 +1,8 @@
 #include "game.h"
 #include "input.h"
+#include "graphics.h"
 #include <string.h>
+#include <stdio.h>
 
 Player player;
 Alien aliens[NUM_ALIENS];
@@ -29,7 +31,7 @@ void handle_input(void) {
         if(player.x <= 5) {
             player.x = 0;
         } else {
-            player.x -= -5;
+            player.x -= 5;
         }
     }
 
@@ -47,7 +49,7 @@ void handle_input(void) {
 }
 
 void shoot_bullet(void) {
-    for(int i = 0; i <= NUM_BULLETS; i++) {
+    for(int i = 0; i < NUM_BULLETS; i++) {
         if(!bullets[i].active) {
             bullets[i].x = player.x;
             bullets[i].y = player.y - 1;
