@@ -1,4 +1,4 @@
-#include "de10_input.h"
+#include "DE10_input.h"
 
 // TODO: Replace with actual DE-10 GPIO addresses
 #define BUTTON_BASE 0xFF200050  // Example - verify with your hardware
