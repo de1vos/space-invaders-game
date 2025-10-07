@@ -52,5 +52,5 @@ void draw_frame(void){
 
     // Draw HUD below the game area
     printf("\n");
-    printf("  SCORE: %d.    LIVES %d.    [Controls: A=Left, D=Right, M=Shoot]", player.score, player.lives);
+    printf("  SCORE: %d.    LIVES %d.    [Controls: A=Left, D=Right, M=Shoot, Q=Quit]", player.score, player.lives);
 }

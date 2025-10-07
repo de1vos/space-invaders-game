@@ -29,10 +29,14 @@ void init_game(void) {
     }
 }
 
-void handle_input(void) {
+int handle_input(void) {
     Action a = get_action();
 
-    if(a == ACTION_LEFT) {
+    if (a == ACTION_QUIT) {
+        return 1;
+    }
+
+    if (a == ACTION_LEFT) {
         if(player.x == 0) {
             player.x = 0;
         } else {
@@ -40,7 +44,7 @@ void handle_input(void) {
         }
     }
 
-    if(a == ACTION_RIGHT) {
+    if (a == ACTION_RIGHT) {
         if(player.x == SCREEN_WIDTH - 1) {
             player.x = SCREEN_WIDTH -1;
         } else {
@@ -48,9 +52,10 @@ void handle_input(void) {
         }
     }
 
-    if(a == ACTION_SHOOT) {
+    if (a == ACTION_SHOOT) {
         shoot_bullet();
     }
+    return 0;
 }
 
 void shoot_bullet(void) {

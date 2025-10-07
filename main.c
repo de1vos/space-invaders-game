@@ -13,8 +13,12 @@ int main(void) {
     init_game();       // load sprites, set score=0, etc.
     draw_frame();
 
-    while (1) {
-      handle_input();    // step 1: check buttons or keyboard
+    int quit = 0;
+    while (!quit) {
+      quit = handle_input();
+      if (quit) {
+        break;
+      }
       update_game();     // step 2: move player, aliens, bullets
       draw_frame();      // step 3: render to VGA memory
       //  wait_vsync();      // (optional) sync with VGA refresh

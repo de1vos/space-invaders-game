@@ -40,7 +40,7 @@ void update_game(void);
 void draw_frame(void);
 
 // Handle player input (buttons or keyboard)
-void handle_input(void);
+int handle_input(void);
 
 // Shoot a bullet from the player
 void shoot_bullet(void);
