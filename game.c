@@ -152,19 +152,19 @@ int player_won(void){
 void show_game_over_screen(void){
     printf("\033[2J\033[H"); // Clear screen
     printf("\n\n\n");
-    printf("  ================================\n");
+    printf("  =====================================\n");
 
     if (player_won()){
-        printf("        YOU WIN!");
+        printf("                 YOU WIN!\n");
     }
     else {
-        printf("           YOU LOSE!");
+        printf("                 YOU LOSE!\n");
     }
 
     printf("  =====================================\n");
     printf("\n");
-    printf("       Final Score: %d\n", player.score);
-    printf("       Lives Left: %d\n", player.lives);
+    printf("             Final Score: %d\n", player.score);
+    printf("             Lives Left: %d\n", player.lives);
     printf("\n");
     printf("  =====================================\n");
     printf("\n");

@@ -22,7 +22,7 @@ int main(void) {
       // Check for game over conditions
       if(is_game_over() || player_won()){
         show_game_over_screen();
-        printf("Press 'r' to restart or 'q' to quit: ");
+        printf("  Press 'r' to restart or 'q' to quit: ");
         char c = getchar();
         if (c == 'r'){
           init_game();
