@@ -1,7 +1,14 @@
 #ifndef DE10_INPUT_H
 #define DE10_INPUT_H
+#include <stdio.h>
 
-#include "input.h"
+typedef enum {
+    ACTION_NONE,     // = 0
+    ACTION_LEFT,     // = 1
+    ACTION_RIGHT,    // = 2
+    ACTION_SHOOT,    // = 3
+    ACTION_QUIT      // = 4
+} Action;
 
 // Initialize GPIO for buttons/switches
 void init_de10_input(void);
@@ -17,3 +24,5 @@ unsigned int read_buttons(void);
 unsigned int read_switches(void);
 
 #endif
+
+
