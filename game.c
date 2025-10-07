@@ -93,7 +93,7 @@ void update_game(void) {
         }
     }
     // Alien movement
-    alien_move_counter++; // Why is this variable necessary?
+    alien_move_counter++;
     if (alien_move_counter >= alien_speed){ 
         alien_move_counter = 0;
 
