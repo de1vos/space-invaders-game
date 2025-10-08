@@ -13,8 +13,8 @@ static int alien_move_counter = 0;
 static int alien_speed = 10;         // Lower = faster
 
 void init_game(void) {
-    player.x = VGA_WIDTH / 2; // Player position initialisation
-    player.y = VGA_HEIGHT - 2; // Player position initialisation
+    player.x = (VGA_WIDTH / PIXEL_SCALE) / 2; // Player position initialisation
+    player.y = (VGA_HEIGHT / PIXEL_SCALE) - 2; // Player position initialisation
     player.lives = PLAYER_LIVES;
     player.score = 0;
 
