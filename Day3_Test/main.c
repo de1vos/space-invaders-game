@@ -13,7 +13,7 @@ int main(void) {
 
     // Game loop control
     int game_tick = 0;
-    int update_rate = 15;
+    int update_rate = 2;
 
     // Main game loop
     draw_frame();
