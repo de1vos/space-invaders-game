@@ -11,7 +11,7 @@
 #define INTERRUPT_MASK (*(volatile unsigned int *)(SWITCH_ADDRESS + 8))
 #define EDGE (*(volatile unsigned int *)(SWITCH_ADDRESS + 12))
 
-volatile int timeout_flag = 0;
+//volatile int timeout_flag = 0;
 
 void init_timer(void) {
     TIMER_CONTROL = 0x7;
@@ -24,7 +24,7 @@ void init_timer(void) {
 void timer_isr(void) {
    
     TIMER_STATUS = 0;
-    timeout_flag = 1;
+    //timeout_flag = 1;
  
 }
 
@@ -67,10 +67,10 @@ Action get_hardware_action(void) {
 
 void handle_interrupt(unsigned cause) {
     TIMER_STATUS = 1;
-    timeout_flag = 0;
+    //timeout_flag = 0;
 
     if(cause == 17 || cause == 18) {
-        get_hardware_action();
+        EDGE = EDGE;
     }
    
     
