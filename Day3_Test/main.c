@@ -8,6 +8,9 @@ int main(void) {
     // Initialize hardware
     init_timer();
 
+    // Initiate DMA
+    init_dma();
+
     // Initialise game state
     init_game();       // load sprites, set score=0, etc.
 
@@ -17,6 +20,7 @@ int main(void) {
 
     // Main game loop
     draw_frame();
+    swap_buffers();
 
     while (1) {
       // Get input from hardware switches and buttons
@@ -29,6 +33,7 @@ int main(void) {
       }
 
       draw_frame();      // step 3: render to VGA memory
+      swap_buffers();
 
       // Check for game over conditions
       if(is_game_over() || player_won()){
