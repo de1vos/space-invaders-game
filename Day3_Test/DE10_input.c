@@ -15,8 +15,8 @@
 
 void init_timer(void) {
     TIMER_CONTROL = 0x7;
-    TIMER_PERIODL = 0xC6C0; 
-    TIMER_PERIODH = 0x002D;   
+    TIMER_PERIODL = 0x93E0;  // Lower 16 bits
+    TIMER_PERIODH = 0x0004;  // Upper 16 bits 
     INTERRUPT_MASK = 0b1000000001;
     EDGE = 0b1000000001;
 }
