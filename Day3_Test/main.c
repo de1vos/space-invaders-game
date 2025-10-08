@@ -29,7 +29,6 @@ int main(void) {
       }
 
       draw_frame();      // step 3: render to VGA memory
-      //  wait_vsync();      // (optional) sync with VGA refresh
 
       // Check for game over conditions
       if(is_game_over() || player_won()){
@@ -41,7 +40,6 @@ int main(void) {
       for (volatile int i = 0; i < 50000; i++);
     }
   // show_game_over_screen();
-  // cleanup();
   return 0;
 }
 
