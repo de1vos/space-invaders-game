@@ -32,17 +32,18 @@ int main(void) {
         game_tick = 0;
       }
 
-      draw_frame();      // step 3: render to VGA memory
-      swap_buffers();
-
       // Check for game over conditions
       if(is_game_over() || player_won()){
         show_game_over_screen();
+        break;
       }
+
+      draw_frame();      // step 3: render to VGA memory
+      swap_buffers();
 
       // Small delay to make game playable in terminal
       // Remove this when moving to hardware with timer interrupt
-      for (volatile int i = 0; i < 50000; i++);
+      // for (volatile int i = 0; i < 50000; i++);
     }
   // show_game_over_screen();
   return 0;
