@@ -43,7 +43,7 @@ int handle_input(void) {
     }
 
     if (a == ACTION_RIGHT) {
-        if(player.x < VGA_WIDTH - 1) {
+        if(player.x < (VGA_WIDTH / PIXEL_SCALE) - 1) {
             player.x += 1;
         }
     }
@@ -93,11 +93,13 @@ void update_game(void) {
     if (alien_move_counter >= alien_speed){ 
         alien_move_counter = 0;
 
+        int max_logical_x = (VGA_WIDTH / PIXEL_SCALE) - 2;  // 320/4 - 2 = 78
+
         //Check if any alive alien hit edge
         int hit_edge = 0;
         for (int i = 0; i < NUM_ALIENS; i++){
             if (aliens[i].alive){
-                if ((alien_direction == 1 && aliens[i].x >= VGA_WIDTH - 2) || 
+                if ((alien_direction == 1 && aliens[i].x >= max_logical_x) || 
                    (alien_direction == -1 && aliens[i].x <= 1)) {
                     hit_edge = 1;
                     break;
