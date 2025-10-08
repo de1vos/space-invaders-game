@@ -5,8 +5,6 @@
 #define NUM_ALIENS 10
 #define NUM_BULLETS 100
 #define PLAYER_LIVES 3
-#define SCREEN_WIDTH 80
-#define SCREEN_HEIGHT 25
 #define POINTS_PER_ALIEN 10
 
 typedef struct {

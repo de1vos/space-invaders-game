@@ -1,5 +1,5 @@
 #include "game.h"
-#include "input.h"
+#include "DE10_input.h"
 #include "graphics.h"
 #include <string.h>
 #include <stdio.h>
@@ -13,8 +13,8 @@ static int alien_move_counter = 0;
 static int alien_speed = 10;         // Lower = faster
 
 void init_game(void) {
-    player.x = SCREEN_WIDTH / 2; // Player position initialisation
-    player.y = SCREEN_HEIGHT - 2; // Player position initialisation
+    player.x = VGA_WIDTH / 2; // Player position initialisation
+    player.y = VGA_HEIGHT - 2; // Player position initialisation
     player.lives = PLAYER_LIVES;
     player.score = 0;
 
@@ -30,24 +30,20 @@ void init_game(void) {
 }
 
 int handle_input(void) {
-    Action a = get_action();
+    Action a = get_hardware_action();
 
     if (a == ACTION_QUIT) {
         return 1;
     }
 
     if (a == ACTION_LEFT) {
-        if(player.x == 0) {
-            player.x = 0;
-        } else {
+        if(player.x > 0) {
             player.x -= 1;
         }
     }
 
     if (a == ACTION_RIGHT) {
-        if(player.x == SCREEN_WIDTH - 1) {
-            player.x = SCREEN_WIDTH -1;
-        } else {
+        if(player.x < VGA_WIDTH - 1) {
             player.x += 1;
         }
     }
@@ -83,8 +79,8 @@ void update_game(void) {
             // Check collision with aliens
             for(int j = 0; j < NUM_ALIENS; j++) {
                 if(aliens[j].alive &&
-                   bullets[i].x == aliens[j].x &&
-                   bullets[i].y == aliens[j].y) {
+                    bullets[i].x == aliens[j].x &&
+                    bullets[i].y == aliens[j].y) {
                     aliens[j].alive = 0;   // kill alien
                     bullets[i].active = 0; // remove bullet
                     player.score += POINTS_PER_ALIEN;
@@ -101,7 +97,7 @@ void update_game(void) {
         int hit_edge = 0;
         for (int i = 0; i < NUM_ALIENS; i++){
             if (aliens[i].alive){
-                if ((alien_direction == 1 && aliens[i].x >= SCREEN_WIDTH - 2) || 
+                if ((alien_direction == 1 && aliens[i].x >= VGA_WIDTH - 2) || 
                    (alien_direction == -1 && aliens[i].x <= 1)) {
                     hit_edge = 1;
                     break;
@@ -155,22 +151,4 @@ int player_won(void){
 }
 
 void show_game_over_screen(void){
-    printf("\033[2J\033[H"); // Clear screen
-    printf("\n\n\n");
-    printf("  =====================================\n");
-
-    if (player_won()){
-        printf("                 YOU WIN!\n");
-    }
-    else {
-        printf("                 YOU LOSE!\n");
-    }
-
-    printf("  =====================================\n");
-    printf("\n");
-    printf("             Final Score: %d\n", player.score);
-    printf("             Lives Left: %d\n", player.lives);
-    printf("\n");
-    printf("  =====================================\n");
-    printf("\n");
 }
