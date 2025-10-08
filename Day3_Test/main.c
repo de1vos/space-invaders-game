@@ -23,7 +23,7 @@ int main(void) {
 
       handle_input();
       game_tick++;
-      if(game_tick <= update_rate){
+      if(game_tick >= update_rate){
         update_game();     // step 2: move player, aliens, bullets
         game_tick = 0;
       }

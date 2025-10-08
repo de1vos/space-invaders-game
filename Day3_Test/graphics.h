@@ -22,9 +22,9 @@
 void draw_frame(void);
 
 // Helper drawing functions
-void draw_block(int x, int y, int w, int h, unsigned char color);
-void draw_line_h(int y, int x1, int x2, unsigned char color);
-void draw_line_v(int x, int y1, int y2, unsigned char color);
+void draw_block(volatile unsigned char *fb, int x, int y, int w, int h, unsigned char color);
+void draw_line_h(volatile unsigned char *fb, int y, int x1, int x2, unsigned char color);
+void draw_line_v(volatile unsigned char *fb, int x, int y1, int y2, unsigned char color);
 
 
 #endif

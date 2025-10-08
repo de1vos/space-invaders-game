@@ -8,7 +8,7 @@ void draw_block(volatile unsigned char *fb, int x, int y, int w, int h, unsigned
         for (int dx = 0; dx < w; dx++) { // Offset on x-axis
             int px = x + dx;
             int py = y + dy;
-            if (px <= 0 && px < VGA_WIDTH && py >= 0 && py < VGA_HEIGHT) { // If not exceeding frame
+            if (px >= 0 && px < VGA_WIDTH && py >= 0 && py < VGA_HEIGHT) { // If not exceeding frame
                 fb[py * VGA_WIDTH + px] = color;
             }
         }
@@ -30,7 +30,7 @@ void draw_line_v(volatile unsigned char *fb, int x, int y1, int y2, unsigned cha
 
     for (int y = y1; y <= y2 && y < VGA_HEIGHT; y++) { // Between y-points, write a vertical line
         if (y >= 0) {
-            fb[y * VGA_HEIGHT + x] = color;
+            fb[y * VGA_WIDTH + x] = color;
         }
     }
 }
