@@ -10,7 +10,7 @@ Bullet bullets[NUM_BULLETS];
 
 static int alien_direction = 1;      // 1 = right, -1 = left
 static int alien_move_counter = 0;
-static int alien_speed = 10;         // Lower = faster
+static int alien_speed = 5;         // Lower = faster
 
 void init_game(void) {
     player.x = (VGA_WIDTH / PIXEL_SCALE) / 2; // Player position initialisation
