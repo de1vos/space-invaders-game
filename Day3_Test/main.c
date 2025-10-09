@@ -3,6 +3,7 @@
 #include "DE10_input.h"    
 #include "game.h" 
 #include "graphics.h"
+#include "hardware_addresses.h"
 
 int main(void) {
     // Initialize hardware
@@ -13,6 +14,16 @@ int main(void) {
 
     // Initialise game state
     init_game();       // load sprites, set score=0, etc.
+
+    // Clear both buffers
+    volatile unsigned char *fb = (unsigned char *)VGA_FRAMEBUFFER;
+    for (int i = 0; i < 320 * 240; i++) {
+        fb[i] = COLOR_BLACK;
+    }
+    fb = (unsigned char *)BACK_BUFFER;
+    for (int i = 0; i < 320 * 240; i++) {
+        fb[i] = COLOR_BLACK;
+    }
 
     // Game loop control
     int game_tick = 0;
