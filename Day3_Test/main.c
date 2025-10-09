@@ -10,28 +10,18 @@ int main(void) {
     init_timer();
 
     // Initiate DMA
-    init_dma();
+    // init_dma();
 
     // Initialise game state
-    init_game();       // load sprites, set score=0, etc.
-
-    // Clear both buffers
-    volatile unsigned char *fb = (unsigned char *)VGA_FRAMEBUFFER;
-    for (int i = 0; i < 320 * 240; i++) {
-        fb[i] = COLOR_BLACK;
-    }
-    fb = (unsigned char *)BACK_BUFFER;
-    for (int i = 0; i < 320 * 240; i++) {
-        fb[i] = COLOR_BLACK;
-    }
+    init_game(); // load sprites, set score=0, etc.
 
     // Game loop control
     int game_tick = 0;
-    int update_rate = 2;
+    int update_rate = 1;
 
     // Main game loop
     draw_frame();
-    swap_buffers();
+    // swap_buffers();
 
     while (1) {
       // Get input from hardware switches and buttons
@@ -44,17 +34,16 @@ int main(void) {
       }
 
       draw_frame();      // step 3: render to VGA memory
-      swap_buffers();
+      // swap_buffers();
 
       // Game over
       if(is_game_over() || player_won()){
           break;
       }
 
-
       // Small delay to make game playable in terminal
       // Remove this when moving to hardware with timer interrupt
-      // for (volatile int i = 0; i < 50000; i++);
+      for (volatile int i = 0; i < 50000; i++);
     }
   return 0;
 }

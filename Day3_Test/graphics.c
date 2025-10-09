@@ -73,7 +73,7 @@ void draw_line_v(volatile unsigned char *fb, int x, int y1, int y2, unsigned cha
 
 // Instead of 2D char array, draw directly to framebuffer
 void draw_frame(void){
-    volatile unsigned char *framebuffer = (unsigned char *)current_back_buffer;
+    volatile unsigned char *framebuffer = (unsigned char *)VGA_FRAMEBUFFER; // current_back_buffer;
 
     // Clear screen (black)
     for (int i = 0; i < 320 * 240; i++){
@@ -114,10 +114,5 @@ void draw_frame(void){
     if (score_bars > 20) score_bars = 20;
     for (int i = 0; i < score_bars; i++) {
         draw_block(framebuffer, VGA_WIDTH - 10 - (i*2), 5, 1, 10, COLOR_GREEN);
-    }
-
-    // Lives indicator
-    for (int i = 0; i < player.lives; i++) {
-        draw_block(framebuffer, 10 + (i * 8), 5, 5, 5, COLOR_CYAN);
     }
 }
