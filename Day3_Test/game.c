@@ -110,7 +110,7 @@ void update_game(void) {
             // Change direction and move down
             alien_direction *= -1;
             for (int i = 0; i < NUM_ALIENS; i++){
-                aliens[i].y += 1;
+                aliens[i].y += 6;
 
                 // Check if alien reached player
                 if (aliens[i].y >= player.y){

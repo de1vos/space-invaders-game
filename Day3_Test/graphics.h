@@ -18,6 +18,8 @@
 #define VGA_HEIGHT 240 // Vertical screen size
 #define PIXEL_SCALE 4
 
+#define BACK_BUFFER 0x08012C00
+
 // Main rendering function
 void draw_frame(void);
 
@@ -26,5 +28,7 @@ void draw_block(volatile unsigned char *fb, int x, int y, int w, int h, unsigned
 void draw_line_h(volatile unsigned char *fb, int y, int x1, int x2, unsigned char color);
 void draw_line_v(volatile unsigned char *fb, int x, int y1, int y2, unsigned char color);
 
+void init_dma(void);
+void swap_buffers(void);
 
 #endif

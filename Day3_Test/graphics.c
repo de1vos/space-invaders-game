@@ -3,6 +3,42 @@
 #include "hardware_addresses.h"
 #include <string.h>
 
+volatile unsigned char *current_back_buffer = (unsigned char *)BACK_BUFFER;
+
+void init_dma(void) {
+    volatile unsigned int *dma_ctrl = (volatile unsigned int *)VGA_PIXELBUFFER_DMA;
+    
+    // Offset 0x4: Set back buffer address (offset +1 in int pointer = +4 bytes)
+    *(dma_ctrl + 1) = BACK_BUFFER;
+    
+    // Offset 0x8: Set resolution if needed (offset +2)
+    // *(dma_ctrl + 2) = 0x00F0013F;  // Uncomment if needed: 240 rows, 319 cols
+    
+    current_back_buffer = (unsigned char *)BACK_BUFFER;
+}
+
+void swap_buffers(void) {
+    volatile unsigned int *dma_ctrl = (volatile unsigned int *)VGA_PIXELBUFFER_DMA; // current_back_buffer;
+    
+    // Offset 0x0: Write 1 to buffer register to request swap
+    *dma_ctrl = 1;
+    
+    // Offset 0xC: Wait for S bit (status bit 0) to clear (offset +3)
+    while (*(dma_ctrl + 3) & 0x1) {
+        // Busy wait - swap in progress
+    }
+    
+    // After swap, read which buffer is NOW the front buffer (offset 0x0)
+    unsigned int current_front = *dma_ctrl;
+    
+    // Draw to whichever buffer is NOT being displayed
+    if (current_front == VGA_FRAMEBUFFER) {
+        current_back_buffer = (unsigned char *)BACK_BUFFER;
+    } else {
+        current_back_buffer = (unsigned char *)VGA_FRAMEBUFFER;
+    }
+}
+
 void draw_block(volatile unsigned char *fb, int x, int y, int w, int h, unsigned char color){
     for (int dy = 0; dy < h; dy++) { // Offset on y-axis
         for (int dx = 0; dx < w; dx++) { // Offset on x-axis
@@ -37,7 +73,7 @@ void draw_line_v(volatile unsigned char *fb, int x, int y1, int y2, unsigned cha
 
 // Instead of 2D char array, draw directly to framebuffer
 void draw_frame(void){
-    volatile unsigned char *framebuffer = (unsigned char *)VGA_FRAMEBUFFER;
+    volatile unsigned char *framebuffer = (unsigned char *)VGA_FRAMEBUFFER; // current_back_buffer;
 
     // Clear screen (black)
     for (int i = 0; i < 320 * 240; i++){
@@ -78,10 +114,5 @@ void draw_frame(void){
     if (score_bars > 20) score_bars = 20;
     for (int i = 0; i < score_bars; i++) {
         draw_block(framebuffer, VGA_WIDTH - 10 - (i*2), 5, 1, 10, COLOR_GREEN);
-    }
-
-    // Lives indicator
-    for (int i = 0; i < player.lives; i++) {
-        draw_block(framebuffer, 10 + (i * 8), 5, 5, 5, COLOR_CYAN);
     }
 }
