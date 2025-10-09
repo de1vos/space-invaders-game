@@ -18,7 +18,7 @@ void init_dma(void) {
 }
 
 void swap_buffers(void) {
-    volatile unsigned int *dma_ctrl = (volatile unsigned int *)VGA_PIXELBUFFER_DMA;
+    volatile unsigned int *dma_ctrl = (volatile unsigned int *)VGA_PIXELBUFFER_DMA; // current_back_buffer;
     
     // Offset 0x0: Write 1 to buffer register to request swap
     *dma_ctrl = 1;
