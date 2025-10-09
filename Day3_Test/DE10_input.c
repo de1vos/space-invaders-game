@@ -14,18 +14,18 @@
 //volatile int timeout_flag = 0;
 
 void init_timer(void) {
-    TIMER_CONTROL = 0x7;
-    TIMER_PERIODL = 0xEA60;  // Lower 16 bits
+    TIMER_CONTROL = 0x7; // Set to start, cont, and 'interrupt on' (ito)
+    TIMER_PERIODL = 0xEA60;  // Lower 16 bits (=> Decimal = 60 000 clock cycles/timer cycle)
     TIMER_PERIODH = 0x0000;  // Upper 16 bits
-    INTERRUPT_MASK = 0b1000000001;
-    EDGE = 0b1000000001;
+    INTERRUPT_MASK = 0b1000000001; // Sets which switches are allowed to generate an interrupt
+    EDGE = 0b1000000001; // Edge detection activation for each switch position
 }
 
-void timer_isr(void) {
-   
+void timer_isr(void) { // Not used
+
     TIMER_STATUS = 0;
-    //timeout_flag = 1;
- 
+    //timeout_flag = 1; // Unnecessary
+
 }
 
 
@@ -33,21 +33,21 @@ int get_btn(void)
 {
   volatile int *btn_pointer = (volatile int *)0x040000d0;
 
-  return *btn_pointer & 0x1;
+  return *btn_pointer & 0x1; // Return 1 first bit of word in button-address
 }
 
 int get_sw(void)
 {
   volatile int *sw_pointer = (volatile int *)0x04000010;
 
-  return *sw_pointer & 0x3FF;
+  return *sw_pointer & 0x3FF; // Return 10 first bits of word in switches-address
 }
 
 
 Action get_hardware_action(void) {
     
-    unsigned int switch_state = get_sw();
-    unsigned int button_state = get_btn();
+    unsigned int switch_state = get_sw(); // Fetch switch positions
+    unsigned int button_state = get_btn(); // Fetch button position
     
     // Check which button was pressed
     if((switch_state & 0b1000000000) == 0b1000000000) { 
@@ -66,11 +66,11 @@ Action get_hardware_action(void) {
 }
 
 void handle_interrupt(unsigned cause) {
-    TIMER_STATUS = 1;
-    //timeout_flag = 0;
+    TIMER_STATUS = 1; // Write-to-clear: Clears the timer status (=timeout reached) register, so that the interrupt is stopped
+    //timeout_flag = 0; // Unnecessary
 
-    if(cause == 17 || cause == 18) {
-        EDGE = EDGE;
+    if(cause == 17 || cause == 18) { // If interrupt cause is switches (=17) or button (=18)
+        EDGE = EDGE; // Write-to-clear: Clears the edge-capture registers, so that the interrupt is stopped and it doesn't stay "activated"
     }
    
     

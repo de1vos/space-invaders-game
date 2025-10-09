@@ -1,8 +1,8 @@
 #include "game.h"
 #include "DE10_input.h"
 #include "graphics.h"
-#include <string.h>
-#include <stdio.h>
+#include <string.h> // unnecessary probably, leftover from terminal-build
+#include <stdio.h> // Unnecessary probably, we don't use printf, leftover from terminal-build
 
 Player player;
 Alien aliens[NUM_ALIENS];
@@ -13,14 +13,14 @@ static int alien_move_counter = 0;
 static int alien_speed = 5;         // Lower = faster
 
 void init_game(void) {
-    player.x = (VGA_WIDTH / PIXEL_SCALE) / 2; // Player position initialisation
-    player.y = (VGA_HEIGHT / PIXEL_SCALE) - 2; // Player position initialisation
+    player.x = (VGA_WIDTH / PIXEL_SCALE) / 2; // Player position initialisation, logical units
+    player.y = (VGA_HEIGHT / PIXEL_SCALE) - 2; // Player position initialisation, logical units
     player.lives = PLAYER_LIVES;
     player.score = 0;
 
     for (int i = 0; i < NUM_ALIENS; i++) { // Sets rows of 5 of aliens
-        aliens[i].x = (i % 5) * 12 + 10; // Intra-row position
-        aliens[i].y = (i / 5) * 4 + 2; // Inter-row position
+        aliens[i].x = (i % 5) * 12 + 10; // Intra-row position, pixel units
+        aliens[i].y = (i / 5) * 4 + 2; // Inter-row position, pixel units
         aliens[i].alive = 1;
     }
 
@@ -37,13 +37,13 @@ int handle_input(void) {
     }
 
     if (a == ACTION_LEFT) {
-        if(player.x > 0) {
+        if(player.x > 0 ) {
             player.x -= 1;
         }
     }
 
     if (a == ACTION_RIGHT) {
-        if(player.x < (VGA_WIDTH / PIXEL_SCALE) - 1) {
+        if(player.x < (VGA_WIDTH / PIXEL_SCALE) - 1) { // Logical unit check, so that block doesn't go out-of-bounds
             player.x += 1;
         }
     }
@@ -65,8 +65,9 @@ void shoot_bullet(void) {
     }
 }
 
-// Move bullets and check for off-screen
+// State changer: Move aliens, bullets, check for off-screen position
 void update_game(void) {
+    // Bullet movement
     for(int i = 0; i < NUM_BULLETS; i++) {
         if(bullets[i].active) {
             bullets[i].y -= 1;  // move bullet up
@@ -80,9 +81,9 @@ void update_game(void) {
             for(int j = 0; j < NUM_ALIENS; j++) {
                 if(aliens[j].alive &&
                     bullets[i].x == aliens[j].x &&
-                    bullets[i].y == aliens[j].y) {
+                    bullets[i].y == aliens[j].y) { // If superposition of bullet and alien
                     aliens[j].alive = 0;   // kill alien
-                    bullets[i].active = 0; // remove bullet
+                    bullets[i].active = 0; 
                     player.score += POINTS_PER_ALIEN;
                 }
             }
@@ -106,8 +107,9 @@ void update_game(void) {
                 }
             }
         }
+        // If any alien has hit an edge, do the following
         if (hit_edge) {
-            // Change direction and move down
+            //  Change direction and move down
             alien_direction *= -1;
             for (int i = 0; i < NUM_ALIENS; i++){
                 aliens[i].y += 6;
@@ -137,7 +139,7 @@ int all_aliens_dead(void){
 }
 
 int is_game_over(void){
-    if (player.lives <= 0) {
+    if ( player.lives <= 0) {
         return 1;
     }
     for (int i = 0; i < NUM_ALIENS; i++) {
